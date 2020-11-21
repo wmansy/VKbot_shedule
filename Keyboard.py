@@ -1,13 +1,14 @@
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 
-def start():
-    '''
-    Blue - RIMARY
-    Red - NEGATIVE
-    Green - POSITIVE
-    White - SECONDARY
-    '''
+'''
+   Blue - RIMARY
+   Red - NEGATIVE
+   Green - POSITIVE
+   White - SECONDARY
+'''
 
+
+def start():
     keyboard1 = VkKeyboard(one_time=False)
 
     keyboard1.add_button('info', color=VkKeyboardColor.POSITIVE)
