@@ -76,17 +76,18 @@ shed = np.array([[
       "|17:15-18:50| -----"]]
 ])
 teachers = [
-    "Шукенбаев Айрат Бисенгалеевич\nshukenbaev@mail.ru\nПрограммная инженирия\nhttps://us04web.zoom.us/j/5417715940?pwd=S3dEY2VvKzR6eHA5NWs3cDFFa3F0UT09~ПИ Щука",
-    "Безумнов Данил Николаевич\nd.n.bezumnov@mtuci.ru\nЦифровые технологии Smart City\nМикропроцессоры в РСУ\nthe link is missing~Безумноу смарт сити",
-    "Ларин Александр Иванович\na.i.larin@mtuci.ru\nТехнологии нечеткого управление\nСетевые технологии\nhttps://us04web.zoom.us/j/4678454922?pwd=dXlCK1B0OXVJVzg5QTdyQ0VKNGZwdz09#ТНУ",
-    "Воронов Вячеслав Игоревич\nТехнологии базы данных\nhttps://us02web.zoom.us/j/78142002672?pwd=bGRGWDlWWFJIL1hlaGNXVWFlTjZQZz09~воронцов бд",
-    "Белов Никита Вадимович\nn.v.belov@mtuci.ru\nТехнологии базы данных л.р.\nhttps://us04web.zoom.us/j/6771401873?pwd=QUU3ZTRaRnhZSnR1eHFMbTc2Rzg5dz09~бд белоу",
-    "Верба Вера Алексеевна\nverba@list.ru\nТАУ\nhttps://us04web.zoom.us/j/6874235879?pwd=Nnl0NmcxUlIxdFI2eElPNnBZcm8rQT09",
-    "Ерофеева Виктория Вячеславовна\nЭкология\nhttps://us04web.zoom.us/j/2823911433?pwd=VExFN1ViZWRyeS94eU5wVDc1cWhoUT09~эко",
-    "Корнеев Руслан Кто то тамович\n89654416870@mail.ru\nФизическая культура\nhttps://lms.mtuci.ru/lms/my/~физра физ ра лмс"]
-dayWeek = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "неделя", "2 - неделя",
-           "пн", "вт", "ср", "чт", "пт", "сб",
-           "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "week",
+    "Шукенбаев Айрат Бисенгалеевич \nshukenbaev@mail.ru \nПрограммная инженирия \nhttps://us04web.zoom.us/j/5417715940?pwd=S3dEY2VvKzR6eHA5NWs3cDFFa3F0UT09 ~ ПИ Щука ",
+    "Безумнов Данил Николаевич \nd.n.bezumnov@mtuci.ru \nЦифровые технологии Smart City \nМикропроцессоры в РСУ \nthe link is missing ~ Безумноу смарт сити ",
+    "Ларин Александр Иванович \na.i.larin@mtuci.ru \nТехнологии нечеткого управление \nСетевые технологии \nhttps://us04web.zoom.us/j/4678454922?pwd=dXlCK1B0OXVJVzg5QTdyQ0VKNGZwdz09 ~ ТНУ ",
+    "Воронов Вячеслав Игоревич \nТехнологии базы данных \nhttps://us02web.zoom.us/j/78142002672?pwd=bGRGWDlWWFJIL1hlaGNXVWFlTjZQZz09 ~ воронцов бд ",
+    "Белов Никита Вадимович \nn.v.belov@mtuci.ru \nТехнологии базы данных л.р. \nhttps://us04web.zoom.us/j/6771401873?pwd=QUU3ZTRaRnhZSnR1eHFMbTc2Rzg5dz09 ~ бд белоу ",
+    "Верба Вера Алексеевна \nverba@list.ru \nТАУ \nhttps://us04web.zoom.us/j/6874235879?pwd=Nnl0NmcxUlIxdFI2eElPNnBZcm8rQT09 ",
+    "Ерофеева Виктория Вячеславовна \nЭкология \nhttps://us04web.zoom.us/j/2823911433?pwd=VExFN1ViZWRyeS94eU5wVDc1cWhoUT09 ~ эко ",
+    "Корнеев Руслан Кто то тамович \n89654416870@mail.ru \nФизическая культура \nhttps://lms.mtuci.ru/lms/my/ ~ физра физ ра лмс "]
+
+dayWeek = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье", "неделя", "2 - неделя",
+           "пн", "вт", "ср", "чт", "пт", "сб", "вс"
+           "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "week",
            "сегодня", "завтра"]
 
 
@@ -142,6 +143,8 @@ def weekday(message):
         return day(weekNum, 4)
     elif message == 'суббота' or message == 'сб' or message == 'saturday':
         return day(weekNum, 5)
+    elif message == 'воскресенье' or message == 'вс' or message == 'sunday':
+        return "Сегодня у тебя выходной)"
     elif message == 'неделя' or message == 'week':
         return week(weekNum)
     elif message == '2 - неделя':
@@ -161,10 +164,3 @@ def weekday(message):
         elif dayNum == 7:
             dayNum = 0
         return day(weekNum, dayNum)
-
-
-if __name__ == '__main__':
-    a = weekday('2 - неделя')
-    date = datetime.datetime.today() + datetime.timedelta(hours=3)
-    #a = date.isocalendar()[1] % 2
-    print(a)
