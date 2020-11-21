@@ -85,9 +85,9 @@ teachers = [
     "Ерофеева Виктория Вячеславовна\nЭкология\nhttps://us04web.zoom.us/j/2823911433?pwd=VExFN1ViZWRyeS94eU5wVDc1cWhoUT09~эко",
     "Корнеев Руслан Кто то тамович\n89654416870@mail.ru\nФизическая культура\nhttps://lms.mtuci.ru/lms/my/~физра физ ра лмс"]
 dayWeek = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "неделя", "2 - неделя",
-        "пн", "вт", "ср", "чт", "пт", "сб",
-        "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "week",
-        "сегодня", "завтра"]
+           "пн", "вт", "ср", "чт", "пт", "сб",
+           "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "week",
+           "сегодня", "завтра"]
 
 
 def teacher(name):
@@ -147,6 +147,8 @@ def weekday(message):
     elif message == '2 - неделя':
         if weekNum == 0:
             weekNum = 1
+        else:
+            weekNum = 0
         return week(weekNum)
     elif message == 'сегодня':
         if dayNum == 6:
@@ -160,3 +162,9 @@ def weekday(message):
             dayNum = 0
         return day(weekNum, dayNum)
 
+
+if __name__ == '__main__':
+    a = weekday('2 - неделя')
+    date = datetime.datetime.today() + datetime.timedelta(hours=3)
+    #a = date.isocalendar()[1] % 2
+    print(a)
