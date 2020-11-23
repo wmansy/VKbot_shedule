@@ -25,14 +25,12 @@ class Main(object):
         self.vk_api = vk.get_api()
         print("Server started")
 
-
     def send_msg(self, userId, message):
         self.vk_api.messages.send(peer_id=userId, random_id=get_random_id(), message=message)
 
     def send_msg_k(self, userId, keyboard, message):
         self.vk_api.messages.send(peer_id=userId, random_id=get_random_id(), keyboard=keyboard.get_keyboard(),
                                   message=message)
-
 
     def mailing(self, z):
         date = datetime.datetime.today() + datetime.timedelta(hours=3)
@@ -48,7 +46,6 @@ class Main(object):
                     elif '--' not in Rasp.shed[weekNum, dayNum, z]:
                         self.send_msg(id, Rasp.shed[weekNum, dayNum, z])
 
-
     def timetable(self):
         # время указано в UTC
         schedule.every().day.at("06:00").do(self.mailing, 0)
@@ -61,7 +58,6 @@ class Main(object):
         while True:
             schedule.run_pending()
             time.sleep(55)
-
 
     def waiting_msg(self):
         try:
@@ -143,7 +139,9 @@ class Main(object):
 
 
 if __name__ == '__main__':
-    bot = Main('MyToken')
+
+
+    bot = Main('Mytoken')
 
     t1 = threading.Thread(target=bot.timetable, name="timetable")
     t2 = threading.Thread(target=bot.waiting_msg, name="waiting_msg")

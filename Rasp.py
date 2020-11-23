@@ -3,10 +3,10 @@ import numpy as np
 
 shed = np.array([[
     ["Понедельник",
-     "|09:30-11:05| Программная инженирия л.р.\nhttps://us04web.zoom.us/j/5417715940?pwd=S3dEY2VvKzR6eHA5NWs3cDFFa3F0UT09",
-     "|11:20-12:55| Программная инженирия л.р. \nhttps://us04web.zoom.us/j/5417715940?pwd=S3dEY2VvKzR6eHA5NWs3cDFFa3F0UT09",
+     "|09:30-11:05| -----",
+     "|11:20-12:55| -----",
      "|13:10-14:45| Цифровые технологии Smart City л.р. \n--",
-     "|15:25-17:00| -----",
+     "|15:25-17:00| Программная инженерия л.р.\nhttps://us04web.zoom.us/j/5417715940?pwd=S3dEY2VvKzR6eHA5NWs3cDFFa3F0UT09",
      "|17:15-18:50| Физическая культура ДО \nlms.mtuci.ru/lms/mod/bigbluebuttonbn/view.php?id=16886&group=0"],
     ["Вторник",
      "|09:30-11:05| Технологии нечеткого управления лек.\nhttps://us04web.zoom.us/j/4678454922?pwd=dXlCK1B0OXVJVzg5QTdyQ0VKNGZwdz09",
@@ -42,7 +42,7 @@ shed = np.array([[
       "|09:30-11:05| -----",
       "|11:20-12:55| -----",
       "|13:10-14:45| Цифровые технологии Smart City л.р. \n--",
-      "|15:25-17:00| -----",
+      "|15:50-17:20| `Программная инженерия л.р.\nhttps://us04web.zoom.us/j/5417715940?pwd=S3dEY2VvKzR6eHA5NWs3cDFFa3F0UT09",
       "|17:15-18:50| Физическая культура ДО\nlms.mtuci.ru/lms/mod/bigbluebuttonbn/view.php?id=16886&group=0"],
      ["Вторник",
       "|09:30-11:05| Цифровые технологии Smart City лек. \n--",
@@ -83,7 +83,7 @@ teachers = [
     "Белов Никита Вадимович \nn.v.belov@mtuci.ru \nТехнологии базы данных л.р. \nhttps://us04web.zoom.us/j/6771401873?pwd=QUU3ZTRaRnhZSnR1eHFMbTc2Rzg5dz09 ~ бд белоу ",
     "Верба Вера Алексеевна \nverba@list.ru \nТАУ \nhttps://us04web.zoom.us/j/6874235879?pwd=Nnl0NmcxUlIxdFI2eElPNnBZcm8rQT09 ",
     "Ерофеева Виктория Вячеславовна \nЭкология \nhttps://us04web.zoom.us/j/2823911433?pwd=VExFN1ViZWRyeS94eU5wVDc1cWhoUT09 ~ эко ",
-    "Корнеев Руслан Кто то тамович \n89654416870@mail.ru \nФизическая культура \nhttps://lms.mtuci.ru/lms/my/ ~ физра физ ра лмс "]
+    "Корнеев Руслан Кто то тамович \n89654416870@mail.ru \nФизическая культура \nhttps://lms.mtuci.ru/lms/my/ ~ физра физ ра лмс"]
 
 dayWeek = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье", "неделя", "2 - неделя",
            "пн", "вт", "ср", "чт", "пт", "сб", "вс"
@@ -163,4 +163,8 @@ def weekday(message):
             return "Завтра у тебя выходной)"
         elif dayNum == 7:
             dayNum = 0
+            if weekNum == 0:
+                weekNum = 1
+            else:
+                weekNum = 0
         return day(weekNum, dayNum)
