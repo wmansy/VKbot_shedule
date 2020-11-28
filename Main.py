@@ -23,6 +23,7 @@ class Main(object):
         vk = vk_api.VkApi(token=token)
         self.longpoll = VkLongPoll(vk)
         self.vk_api = vk.get_api()
+        self.ttime = time.time()
         print("Server started")
 
     def send_msg(self, userId, message):
@@ -44,6 +45,8 @@ class Main(object):
                     if z == 0:
                         self.send_msg(id, Rasp.day(weekNum, dayNum))
                     elif '--' not in Rasp.shed[weekNum, dayNum, z]:
+                        if weekNum == 1 and dayNum == 0:
+                            time.sleep(1600)
                         self.send_msg(id, Rasp.shed[weekNum, dayNum, z])
 
     def timetable(self):
@@ -57,10 +60,11 @@ class Main(object):
 
         while True:
             schedule.run_pending()
-            time.sleep(55)
+            time.sleep(45)
 
     def waiting_msg(self):
         try:
+
             for event in self.longpoll.listen():
                 if event.type == VkEventType.MESSAGE_NEW:
                     if event.to_me:
@@ -70,8 +74,8 @@ class Main(object):
             self.waiting_msg()
 
     def respond(self, user_id, msg):
-        date = datetime.datetime.today() + datetime.timedelta(hours=3)
-        print(date.strftime("%d.%m.%Y.%H:%M:%S") + f' New message from: {user_id}\nText: {msg}')
+        # date = (datetime.datetime.today() + datetime.timedelta(hours=3)).strftime("%d.%m.%Y.%H:%M:%S")
+        print(time.ctime() + f' New message from: {user_id}\nText: {msg}')
 
         if msg == "начать" or msg == "start" or msg == "#":
             self.send_msg_k(user_id, Keyboard.start(), "Здравствуй, " + self.getUserName(user_id))
@@ -82,7 +86,6 @@ class Main(object):
                           "# Так же присутствует возможность узнавать расписание вручную, нажми на расписание\n" +
                           "# Есть возможность узнавать информацию о преподователях\n" +
                           "# Возможности бота небольшие, но вы можете это исправить")
-
         elif msg == "расписание" or msg == "&lt;-":
             self.send_msg_k(user_id, Keyboard.today(), "Расписание на...")
 
@@ -111,17 +114,20 @@ class Main(object):
         elif msg in Rasp.dayWeek:
             self.send_msg(user_id, Rasp.weekday(msg))
 
-        elif msg in "".join(Rasp.teachers).lower().split(" "):
+        elif msg in Rasp.fullteach1() and msg !="":
             self.send_msg(user_id, Rasp.teacher(msg))
 
         elif msg == "преподаватели":
-            self.send_msg(user_id, "Напиши мне его фамилию или предмет, который он ведет")
+            self.send_msg(user_id, Rasp.fullteach())
 
         elif msg == "show":
             self.send_msg(user_id, open('id.txt', 'r').read())
 
         elif msg == '0':
-            self.send_msg(user_id, date)
+            self.send_msg(user_id, '{:.9}'.format(str(datetime.timedelta(seconds=(time.time() - self.ttime)))))
+
+        else:
+            self.send_msg(user_id, "?")
 
         print("-------------------")
 
@@ -141,7 +147,7 @@ class Main(object):
 if __name__ == '__main__':
 
 
-    bot = Main('Mytoken')
+    bot = Main("Mytoken")
 
     t1 = threading.Thread(target=bot.timetable, name="timetable")
     t2 = threading.Thread(target=bot.waiting_msg, name="waiting_msg")

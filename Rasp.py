@@ -1,5 +1,6 @@
 import datetime
 import numpy as np
+import re
 
 shed = np.array([[
     ["Понедельник",
@@ -21,7 +22,7 @@ shed = np.array([[
      "|15:25-17:00| -----",
      "|17:15-18:50| -----"],
     ["Четверг",
-     "|09:30-11:05| ТНУ пр.з.\nhttps://us04web.zoom.us/j/4678454922?pwd=dXlCK1B0OXVJVzg5QTdyQ0VKNGZwdz0'",
+     "|09:30-11:05| ТНУ пр.з.\nhttps://us04web.zoom.us/j/4678454922?pwd=dXlCK1B0OXVJVzg5QTdyQ0VKNGZwdz0",
      "|11:20-12:55| ТАУ л.р.\nhttps://us04web.zoom.us/j/6874235879?pwd=Nnl0NmcxUlIxdFI2eElPNnBZcm8rQT09",
      "|13:10-14:45| ТАУ лек.\nhttps://us04web.zoom.us/j/6874235879?pwd=Nnl0NmcxUlIxdFI2eElPNnBZcm8rQT09",
      "|15:25-17:00| Физическая культура\nlms.mtuci.ru/lms/mod/bigbluebuttonbn/view.php?id=16886&group=0",
@@ -42,7 +43,7 @@ shed = np.array([[
       "|09:30-11:05| -----",
       "|11:20-12:55| -----",
       "|13:10-14:45| Цифровые технологии Smart City л.р. \n--",
-      "|15:50-17:20| `Программная инженерия л.р.\nhttps://us04web.zoom.us/j/5417715940?pwd=S3dEY2VvKzR6eHA5NWs3cDFFa3F0UT09",
+      "|15:50-17:20| Программная инженерия л.р.\nhttps://us04web.zoom.us/j/5417715940?pwd=S3dEY2VvKzR6eHA5NWs3cDFFa3F0UT09\n--",
       "|17:15-18:50| Физическая культура ДО\nlms.mtuci.ru/lms/mod/bigbluebuttonbn/view.php?id=16886&group=0"],
      ["Вторник",
       "|09:30-11:05| Цифровые технологии Smart City лек. \n--",
@@ -76,25 +77,57 @@ shed = np.array([[
       "|17:15-18:50| -----"]]
 ])
 teachers = [
-    "Шукенбаев Айрат Бисенгалеевич \nshukenbaev@mail.ru \nПрограммная инженирия \nhttps://us04web.zoom.us/j/5417715940?pwd=S3dEY2VvKzR6eHA5NWs3cDFFa3F0UT09 ~ ПИ Щука ",
-    "Безумнов Данил Николаевич \nd.n.bezumnov@mtuci.ru \nЦифровые технологии Smart City \nМикропроцессоры в РСУ \nthe link is missing ~ Безумноу смарт сити ",
-    "Ларин Александр Иванович \na.i.larin@mtuci.ru \nТехнологии нечеткого управление \nСетевые технологии \nhttps://us04web.zoom.us/j/4678454922?pwd=dXlCK1B0OXVJVzg5QTdyQ0VKNGZwdz09 ~ ТНУ ",
-    "Воронов Вячеслав Игоревич \nТехнологии базы данных \nhttps://us02web.zoom.us/j/78142002672?pwd=bGRGWDlWWFJIL1hlaGNXVWFlTjZQZz09 ~ воронцов бд ",
-    "Белов Никита Вадимович \nn.v.belov@mtuci.ru \nТехнологии базы данных л.р. \nhttps://us04web.zoom.us/j/6771401873?pwd=QUU3ZTRaRnhZSnR1eHFMbTc2Rzg5dz09 ~ бд белоу ",
-    "Верба Вера Алексеевна \nverba@list.ru \nТАУ \nhttps://us04web.zoom.us/j/6874235879?pwd=Nnl0NmcxUlIxdFI2eElPNnBZcm8rQT09 ",
-    "Ерофеева Виктория Вячеславовна \nЭкология \nhttps://us04web.zoom.us/j/2823911433?pwd=VExFN1ViZWRyeS94eU5wVDc1cWhoUT09 ~ эко ",
-    "Корнеев Руслан Кто то тамович \n89654416870@mail.ru \nФизическая культура \nhttps://lms.mtuci.ru/lms/my/ ~ физра физ ра лмс"]
+    ["Шукенбаев Айрат Бисенгалеевич", "shukenbaev@mail.ru", "Программная инженирия",
+     "https://us04web.zoom.us/j/5417715940?pwd=S3dEY2VvKzR6eHA5NWs3cDFFa3F0UT09", "~ ПИ Щука"],
+    ["Безумнов Данил Николаевич", "d.n.bezumnov@mtuci.ru", "Цифровые технологии Smart City", "Микропроцессоры в РСУ",
+     "the link is missing", "~ Безумноу смарт сити "],
+    ["Ларин Александр Иванович", "a.i.larin@mtuci.ru", "Технологии нечеткого управление", "Сетевые технологии",
+     "https://us04web.zoom.us/j/4678454922?pwd=dXlCK1B0OXVJVzg5QTdyQ0VKNGZwdz09", "~ ТНУ"],
+    ["Воронов Вячеслав Игоревич", "Технологии базы данных",
+     "https://us02web.zoom.us/j/78142002672?pwd=bGRGWDlWWFJIL1hlaGNXVWFlTjZQZz09", " ~ воронцов бд"],
+    ["Белов Никита Вадимович", "n.v.belov@mtuci.ru", "Технологии базы данных л.р.",
+     "https://us04web.zoom.us/j/6771401873?pwd=QUU3ZTRaRnhZSnR1eHFMbTc2Rzg5dz09", " ~ бд белоу"],
+    ["Верба Вера Алексеевна", "verba@list.ru", "ТАУ",
+     "https://us04web.zoom.us/j/6874235879?pwd=Nnl0NmcxUlIxdFI2eElPNnBZcm8rQT09"],
+    ["Ерофеева Виктория Вячеславовна", "Экология",
+     "https://us04web.zoom.us/j/2823911433?pwd=VExFN1ViZWRyeS94eU5wVDc1cWhoUT09"],
+    ["Корнеев Руслан", "89654416870@mail.ru", "Физическая культура", "https://lms.mtuci.ru/lms/my/",
+     " ~ физра лмс"]
+]
 
 dayWeek = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье", "неделя", "2 - неделя",
-           "пн", "вт", "ср", "чт", "пт", "сб", "вс"
+           "пн", "вт", "ср", "чт", "пт", "сб", "вс",
            "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "week",
            "сегодня", "завтра"]
 
 
 def teacher(name):
     for i in teachers:
-        if name in i.lower():
-            return i.split("~")[0]
+        for j in i:
+            if name in j.lower():
+                return ("\n".join(i).split("~")[0])
+
+
+def fullteach():
+    res = ""
+    for i in teachers:
+        for j in i:
+            if not "~" in j:
+                res += j
+                res += "\n"
+        res += "\n"
+    return res
+
+
+def fullteach1():
+    res = ""
+    for i in teachers:
+        for j in i:
+            res += j
+            res += "\n"
+        res += "\n"
+
+    return re.sub('\d|[A-z]|\W', '', res).lower()
 
 
 def day(x, y):
