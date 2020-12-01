@@ -43,7 +43,7 @@ shed = np.array([[
       "|09:30-11:05| -----",
       "|11:20-12:55| -----",
       "|13:10-14:45| Цифровые технологии Smart City л.р. \n--",
-      "|15:50-17:20| Программная инженерия л.р.\nhttps://us04web.zoom.us/j/5417715940?pwd=S3dEY2VvKzR6eHA5NWs3cDFFa3F0UT09\n--",
+      "|15:50-17:20| Программная инженерия л.р.\nhttps://us04web.zoom.us/j/5417715940?pwd=S3dEY2VvKzR6eHA5NWs3cDFFa3F0UT09",
       "|17:15-18:50| Физическая культура ДО\nlms.mtuci.ru/lms/mod/bigbluebuttonbn/view.php?id=16886&group=0"],
      ["Вторник",
       "|09:30-11:05| Цифровые технологии Smart City лек. \n--",
@@ -91,8 +91,8 @@ teachers = [
      "https://us04web.zoom.us/j/6874235879?pwd=Nnl0NmcxUlIxdFI2eElPNnBZcm8rQT09"],
     ["Ерофеева Виктория Вячеславовна", "Экология",
      "https://us04web.zoom.us/j/2823911433?pwd=VExFN1ViZWRyeS94eU5wVDc1cWhoUT09"],
-    ["Корнеев Руслан", "89654416870@mail.ru", "Физическая культура", "https://lms.mtuci.ru/lms/my/",
-     " ~ физра лмс"]
+    ["Корнеев Руслан", "89654416870@mail.ru", "Физическая культура",
+     "lms.mtuci.ru/lms/mod/bigbluebuttonbn/view.php?id=16886&group=0"," ~ физра лмс"]
 ]
 
 dayWeek = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье", "неделя", "2 - неделя",

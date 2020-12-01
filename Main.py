@@ -14,7 +14,6 @@ import Rasp
 
 '''
 @author shaidullin
-@author aaaa1231
 '''
 
 
@@ -41,13 +40,13 @@ class Main(object):
         print(date)
         if dayNum < 6:
             file = open("id.txt", "r").read().split("\n")
+            if weekNum == 1 and dayNum == 0 and z == 4:
+                time.sleep(1600)
             for id in file:
                 if id != "":
                     if z == 0:
                         self.send_msg(id, Rasp.day(weekNum, dayNum))
                     elif '--' not in Rasp.shed[weekNum, dayNum, z]:
-                        if weekNum == 1 and dayNum == 0:
-                            time.sleep(1600)
                         self.send_msg(id, Rasp.shed[weekNum, dayNum, z])
 
     def timetable(self):
@@ -125,11 +124,10 @@ class Main(object):
             self.send_msg(user_id, open('id.txt', 'r').read())
 
         elif msg == '0':
-            self.send_msg(user_id, '{:.9}'.format(str(datetime.timedelta(seconds=(time.time() - self.ttime)))))
+            self.send_msg(user_id, str(datetime.timedelta(seconds=(time.time() - self.ttime))))
 
         else:
             self.send_msg(user_id, "?")
-
         print("-------------------")
 
     @staticmethod
@@ -147,8 +145,7 @@ class Main(object):
 
 if __name__ == '__main__':
 
-
-    bot = Main("Mytoken")
+    bot = Main('Mytoken')
 
     t1 = threading.Thread(target=bot.timetable, name="timetable")
     t2 = threading.Thread(target=bot.waiting_msg, name="waiting_msg")
